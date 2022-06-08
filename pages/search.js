@@ -1,19 +1,44 @@
 import Head from 'next/head';
-import SearchHeader from '../components/SearchHeader'
+import SearchHeader from '../components/SearchHeader';
+import { useRouter } from "next/router";
+import SearchResults from "../components/SearchResults";
+import ImageResults from '../components/ImageResults';
 
-export default function search() {
+export default function search({ results }) {
+    console.log(results);
+    const router = useRouter();
     return (
         <div>
             <Head>
-                <title>Search Page - Results</title>
+                <title>{router.query.term} - Search page</title>
             </Head>
 
-            {/* search header */}
+            {/* Search Header */}
             <SearchHeader />
 
-            {/* results */}
-
+            {/* Search web and Images Results */}
+            {router.query.searchType === "image" ? (
+                <ImageResults results={results} />
+            ) : (
+                <SearchResults results={results} />
+            )}
         </div>
     )
 
+}
+
+export async function getServerSideProps(context) {
+
+    const data = await fetch(
+        `https://www.googleapis.com/customsearch/v1?key=${
+          process.env.GOOGLE_API_KEY
+        }&cx=${process.env.CONTEXT_KEY}&q=${context.query.term}${
+          context.query.searchType && "&searchType=image"
+        }`
+    ).then((response) => response.json())
+    return {
+        props: {
+            results: data
+        }
+    }
 }
