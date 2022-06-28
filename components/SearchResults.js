@@ -1,4 +1,5 @@
 import React from 'react'
+import PaginationButtons from './PaginationButtons'
 
 export default function SearchResults({results}) {
   return (
@@ -15,6 +16,7 @@ export default function SearchResults({results}) {
                     <p className="text-gray-600" dangerouslySetInnerHTML={{__html: result.htmlSnippet}} />
             </div>
         ))}
+        <PaginationButtons />
     </div>
   )
 }

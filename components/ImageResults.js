@@ -1,5 +1,5 @@
 import React from "react";
-// import PaginationButtons from "./PaginationButtons";
+import PaginationButtons from "./PaginationButtons";
 
 export default function ImageResults({ results }) {
   return (
@@ -25,10 +25,11 @@ export default function ImageResults({ results }) {
               </a>
             </div>
           </div>
+          
         ))}
       </div>
-      <div className="ml-16">
-        {/* <PaginationButtons/> */}
+      <div className="w-full mx-auto px-3 sm:pl-[5%] md:pl-[14%] lg:pl-52">
+        <PaginationButtons/>
       </div>
     </div>
   );
